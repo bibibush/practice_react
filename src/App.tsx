@@ -1,10 +1,22 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Fragment } from "react/jsx-runtime";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Hello world!</h1>,
-    errorElement: <h1>Oops, Error page !</h1>,
+    element: (
+      <Fragment>
+        <h1>Hello World !</h1>
+        <Outlet />
+      </Fragment>
+    ),
+    errorElement: <h1>Oops, This is Error page !</h1>,
+    children: [
+      {
+        path: "first",
+        element: <h1>This is first page.</h1>,
+      },
+    ],
   },
 ]);
 

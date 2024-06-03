@@ -1,8 +1,12 @@
 import { Progress } from "@chakra-ui/react";
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export default function ProgressBar() {
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  type IntervalCurrent = ReturnType<typeof setInterval>;
+
   const [state, setState] = useState<number>(0);
   const [isFetching, setFetching] = useState(true);
 
@@ -19,12 +23,23 @@ export default function ProgressBar() {
   };
   useEffect(() => {
     getAPI();
-    for (let i = 0; i < 100 + 1; i++) {
-      setTimeout(() => {
-        setState(i);
-      }, 500);
-    }
+    interval.current = setInterval(() => {
+      setState((prev) => {
+        return prev + 1;
+      });
+      console.log("녕");
+    }, 15);
+
+    return () => {
+      clearInterval(interval.current as IntervalCurrent);
+    };
   }, []);
+
+  useEffect(() => {
+    if (state >= 100) {
+      clearInterval(interval.current as IntervalCurrent);
+    }
+  }, [state]);
 
   return (
     <Fragment>

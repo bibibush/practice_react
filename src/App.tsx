@@ -1,12 +1,13 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
+import ProgressBar from "./components/ProgressBar";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Fragment>
-        <h1>Hello World !</h1>
+        <ProgressBar />
         <Outlet />
       </Fragment>
     ),

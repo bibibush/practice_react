@@ -27,8 +27,7 @@ export default function ProgressBar() {
       setState((prev) => {
         return prev + 1;
       });
-      console.log("녕");
-    }, 15);
+    }, 10);
 
     return () => {
       clearInterval(interval.current as IntervalCurrent);

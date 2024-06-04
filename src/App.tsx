@@ -1,14 +1,13 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
-import ProgressBar from "./components/ProgressBar";
+import Header from "./components/pages/main/Header";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Fragment>
-        <ProgressBar />
-        <Outlet />
+        <Header />
       </Fragment>
     ),
     errorElement: <h1>Oops, This is Error page !</h1>,

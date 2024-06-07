@@ -4,6 +4,15 @@ import { useState } from "react";
 
 export default function Header() {
   const [showInput, setShowInput] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
+
+  const handleClick = () => {
+    setShowInput((prev) => !prev);
+    setValue("");
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
   return (
     <Flex
@@ -25,14 +34,14 @@ export default function Header() {
           transform="auto"
           translateY={showInput ? 0 : -10}
           transition="0.3s"
+          value={value}
+          onChange={handleChange}
         />
         <IconButton
           aria-label="Search database"
           colorScheme="blue"
           icon={showInput ? <CloseIcon /> : <SearchIcon />}
-          onClick={() => {
-            setShowInput((prev) => !prev);
-          }}
+          onClick={handleClick}
         />
       </Flex>
     </Flex>

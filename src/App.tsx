@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 import Header from "./components/pages/main/Header";
+import SideBar from "./components/pages/main/SideBar";
 
 const router = createBrowserRouter([
   {
@@ -8,6 +9,7 @@ const router = createBrowserRouter([
     element: (
       <Fragment>
         <Header />
+        <SideBar />
       </Fragment>
     ),
     errorElement: <h1>Oops, This is Error page !</h1>,

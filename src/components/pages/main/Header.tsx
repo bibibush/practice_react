@@ -16,10 +16,16 @@ export default function Header() {
 
   return (
     <Flex
-      height="90px"
-      justifyContent="space-between"
       alignItems="center"
+      bg="white"
+      height="120px"
+      justifyContent="space-between"
+      position="fixed"
+      top={0}
+      left={0}
       px={2}
+      width="100%"
+      zIndex={99}
     >
       <Img
         src="https://1000logos.net/wp-content/uploads/2023/02/Roland-Garros-logo-768x432.png"

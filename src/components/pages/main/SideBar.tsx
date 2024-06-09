@@ -26,7 +26,7 @@ export default function SideBar() {
     <Flex
       bg="gray.300"
       direction="column"
-      gap={4}
+      gap={6}
       height="100%"
       overflow="hidden"
       position="fixed"
@@ -38,7 +38,12 @@ export default function SideBar() {
       {menus.map((menu) => {
         return (
           <Button
-            colorScheme={menu.id === selectedMenuId ? "gray" : "purple"}
+            bg={menu.id === selectedMenuId ? "white" : "gray.200"}
+            borderRadius={0}
+            boxSizing="content-box"
+            py={1}
+            _active={{ bg: "white" }}
+            _hover={{ bg: "white" }}
             onClick={() => {
               setSelectedMenuId(menu.id);
             }}

@@ -6,12 +6,14 @@ import {
   IconButton,
   Img,
   Input,
+  Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface MethodsType {
   inputValue: string;
+  selectValue: string;
 }
 
 export default function Header() {
@@ -26,6 +28,7 @@ export default function Header() {
 
   useEffect(() => {
     methods.reset({ inputValue: "isDirty?" });
+    methods.setValue("selectValue", "하이");
   }, [methods]);
   console.log(methods.formState.defaultValues);
   return (
@@ -51,13 +54,17 @@ export default function Header() {
           <Input
             flexShrink={0}
             maxWidth="240px"
-            opacity={showInput ? 1 : 0}
-            transform="auto"
-            translateY={showInput ? 0 : -10}
-            transition="0.3s"
+            // opacity={showInput ? 1 : 0}
+            // transform="auto"
+            // translateY={showInput ? 0 : -10}
+            // transition="0.3s"
             {...methods.register("inputValue")}
           />
         </FormControl>
+        <Select {...methods.register("selectValue")}>
+          <option>하이</option>
+          <option>안녕</option>
+        </Select>
         <Button isDisabled={!methods.formState.isDirty}>TEST</Button>
         <IconButton
           aria-label="Search database"

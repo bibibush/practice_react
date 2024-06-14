@@ -1,19 +1,33 @@
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
-import { Flex, IconButton, Img, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  IconButton,
+  Img,
+  Input,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
+interface MethodsType {
+  inputValue: string;
+}
 
 export default function Header() {
   const [showInput, setShowInput] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
+
+  const methods = useForm<MethodsType>({ mode: "onChange" });
 
   const handleClick = () => {
     setShowInput((prev) => !prev);
-    setValue("");
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    methods.resetField("inputValue");
   };
 
+  useEffect(() => {
+    methods.reset({ inputValue: "isDirty?" });
+  }, [methods]);
+  console.log(methods.formState.defaultValues);
   return (
     <Flex
       alignItems="center"
@@ -33,16 +47,18 @@ export default function Header() {
         maxWidth="150px"
       />
       <Flex gap={2} justifyContent="center" width="350px">
-        <Input
-          flexShrink={0}
-          maxWidth="240px"
-          opacity={showInput ? 1 : 0}
-          transform="auto"
-          translateY={showInput ? 0 : -10}
-          transition="0.3s"
-          value={value}
-          onChange={handleChange}
-        />
+        <FormControl>
+          <Input
+            flexShrink={0}
+            maxWidth="240px"
+            opacity={showInput ? 1 : 0}
+            transform="auto"
+            translateY={showInput ? 0 : -10}
+            transition="0.3s"
+            {...methods.register("inputValue")}
+          />
+        </FormControl>
+        <Button isDisabled={!methods.formState.isDirty}>TEST</Button>
         <IconButton
           aria-label="Search database"
           colorScheme="blue"

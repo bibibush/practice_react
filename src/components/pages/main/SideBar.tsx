@@ -42,6 +42,7 @@ export default function SideBar() {
             borderRadius={0}
             boxSizing="content-box"
             py={1}
+            key={menu.id}
             _active={{ bg: "white" }}
             _hover={{ bg: "white" }}
             onClick={() => {

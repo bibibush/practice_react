@@ -1,14 +1,6 @@
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Flex,
-  FormControl,
-  IconButton,
-  Img,
-  Input,
-  Select,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Flex, FormControl, IconButton, Img, Input } from "@chakra-ui/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface MethodsType {
@@ -26,11 +18,6 @@ export default function Header() {
     methods.resetField("inputValue");
   };
 
-  useEffect(() => {
-    methods.reset({ inputValue: "isDirty?" });
-    methods.setValue("selectValue", "하이");
-  }, [methods]);
-  console.log(methods.formState.defaultValues);
   return (
     <Flex
       alignItems="center"
@@ -50,24 +37,19 @@ export default function Header() {
         maxWidth="150px"
       />
       <Flex gap={2} justifyContent="center" width="350px">
-        <FormControl>
+        <FormControl maxWidth="240px">
           <Input
             flexShrink={0}
-            maxWidth="240px"
-            // opacity={showInput ? 1 : 0}
-            // transform="auto"
-            // translateY={showInput ? 0 : -10}
-            // transition="0.3s"
+            opacity={showInput ? 1 : 0}
+            transform="auto"
+            translateY={showInput ? 0 : -10}
+            transition="0.3s"
+            width="100%"
             {...methods.register("inputValue")}
           />
         </FormControl>
-        <Select {...methods.register("selectValue")}>
-          <option>하이</option>
-          <option>안녕</option>
-        </Select>
-        <Button isDisabled={!methods.formState.isDirty}>TEST</Button>
         <IconButton
-          aria-label="Search database"
+          aria-label="Search"
           colorScheme="blue"
           icon={showInput ? <CloseIcon /> : <SearchIcon />}
           onClick={handleClick}

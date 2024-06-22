@@ -1,11 +1,10 @@
 import { Progress } from "@chakra-ui/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export default function ProgressBar() {
-  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
-
   type IntervalCurrent = ReturnType<typeof setInterval>;
+  const interval = useRef<IntervalCurrent | null>(null);
 
   const [state, setState] = useState<number>(0);
   const [isFetching, setFetching] = useState(true);
@@ -17,8 +16,10 @@ export default function ProgressBar() {
         setFetching(false);
       }, 1000);
       return res.data;
-    } catch (err: any) {
-      console.log(err.response);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.log(err.response);
+      }
     }
   };
   useEffect(() => {

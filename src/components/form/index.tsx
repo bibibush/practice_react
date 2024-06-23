@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface Codes {
   empty: string;
@@ -10,6 +10,11 @@ interface Codes {
 }
 
 export default function Form() {
+  const pattern: RegExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const selectRef = useRef<HTMLSelectElement | null>(null);
+
   const [inputValue, setInputValue] = useState<string>("");
   const [selectValue, setSelectValue] = useState<string>("");
 
@@ -32,13 +37,23 @@ export default function Form() {
       }}
     >
       <input
+        ref={inputRef}
+        style={{ border: "2px solid skyblue" }}
         type="text"
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value);
+          const isInputValid = pattern.test(e.target.value);
+          if (!isInputValid) {
+            inputRef.current?.style.setProperty("border", "2px solid red");
+          } else {
+            inputRef.current?.style.setProperty("border", "2px solid skyblue");
+          }
         }}
       />
       <select
+        ref={selectRef}
+        style={{ border: "2px solid skyblue" }}
         value={selectValue}
         onChange={(e) => {
           setSelectValue(e.target.value);

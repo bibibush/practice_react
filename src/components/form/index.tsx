@@ -1,31 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-interface Codes {
-  empty: string;
-  sinner: string;
-  alcaraz: string;
-  zverev: string;
-  nadal: string;
-  djokovic: string;
-}
+const Codes = {
+  empty: "",
+  sinner: "sinner",
+  alcaraz: "alcaraz",
+  zverev: "zverev",
+  nadal: "nadal",
+  djokovic: "djokovic",
+} as const;
+// eslint-disable-next-line
+type Codes = (typeof Codes)[keyof typeof Codes];
 
 export default function Form() {
-  const pattern: RegExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const selectRef = useRef<HTMLSelectElement | null>(null);
+  const pattern: RegExp = useMemo(() => /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/, []);
 
   const [inputValue, setInputValue] = useState<string>("");
-  const [selectValue, setSelectValue] = useState<string>("");
+  const [inputValid, setInputValid] = useState<boolean>(true);
+  const [selectValue, setSelectValue] = useState<Codes | string>("");
 
-  const codes: Codes = {
-    empty: "",
-    sinner: "sinner",
-    alcaraz: "alcaraz",
-    zverev: "zverev",
-    nadal: "nadal",
-    djokovic: "djokovic",
-  };
+  useEffect(() => {
+    if (!inputValue) {
+      return;
+    }
+
+    if (pattern.test(inputValue)) {
+      setInputValid(true);
+    } else {
+      setInputValid(false);
+    }
+  }, [pattern, inputValue]);
 
   return (
     <form
@@ -34,37 +37,35 @@ export default function Form() {
         flexDirection: "column",
         gap: "20px",
         padding: "15px",
+        width: "389px",
       }}
     >
       <input
-        ref={inputRef}
-        style={{ border: "2px solid skyblue" }}
+        style={
+          inputValid
+            ? { border: "2px solid skyblue" }
+            : { border: "2px solid red" }
+        }
         type="text"
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value);
-          const isInputValid = pattern.test(e.target.value);
-          if (!isInputValid) {
-            inputRef.current?.style.setProperty("border", "2px solid red");
-          } else {
-            inputRef.current?.style.setProperty("border", "2px solid skyblue");
-          }
         }}
       />
+      {!inputValid && <p>2~10자 이내로 작성해 주세요 (특수문자 제외)</p>}
       <select
-        ref={selectRef}
         style={{ border: "2px solid skyblue" }}
         value={selectValue}
         onChange={(e) => {
           setSelectValue(e.target.value);
         }}
       >
-        <option value={codes.empty}>선수를 선택하세요</option>
-        <option value={codes.sinner}>Jannick Sinner</option>
-        <option value={codes.alcaraz}>Carlos Alcaraz</option>
-        <option value={codes.zverev}>Alexander Zverev</option>
-        <option value={codes.nadal}>Rafael Nadal</option>
-        <option value={codes.djokovic}>Novak Djokovic</option>
+        <option value={Codes.empty}>선수를 선택하세요</option>
+        <option value={Codes.sinner}>Jannick Sinner</option>
+        <option value={Codes.alcaraz}>Carlos Alcaraz</option>
+        <option value={Codes.zverev}>Alexander Zverev</option>
+        <option value={Codes.nadal}>Rafael Nadal</option>
+        <option value={Codes.djokovic}>Novak Djokovic</option>
       </select>
     </form>
   );

@@ -1,5 +1,5 @@
 import { Progress } from "@chakra-ui/react";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export default function ProgressBar() {
@@ -11,7 +11,9 @@ export default function ProgressBar() {
 
   const getAPI = async () => {
     try {
-      const res = await axios.get("https://fakestoreapi.com/products");
+      const res: AxiosResponse = await axios.get(
+        "https://fakestoreapi.com/products"
+      );
       setTimeout(() => {
         setFetching(false);
       }, 1000);

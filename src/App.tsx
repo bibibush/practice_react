@@ -4,6 +4,7 @@ import Header from "./components/pages/main/Header";
 import SideBar from "./components/pages/main/SideBar";
 import Main from "./components/pages/main/main";
 import InfiniteScroll from "./components/pages/InfiniteScroll";
+import InininiteScrollObserver from "./components/pages/InfiniteScroll/InfiniteScrollWithIntersectionObserver";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "infinite",
         element: <InfiniteScroll />,
+      },
+      {
+        path: "infinite-observer",
+        element: <InininiteScrollObserver />,
       },
     ],
   },

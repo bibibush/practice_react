@@ -13,16 +13,25 @@ export default function InininiteScrollObserver() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [throttle, setThrottle] = useState<boolean>(false);
 
-  const handleObserver = () => {};
+  const handleObserver = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ) => {
+    const target = entries[0];
+
+    if (target.isIntersecting) {
+      console.log("얼만큼 동작하나");
+      dispatch(getFakeProducts(5));
+    }
+  };
   const observer = new IntersectionObserver(handleObserver, { threshold: 0.3 });
   const handleScroll = () => {
     if (throttle) {
       return;
     }
-    observer.observe(observerRef.current as HTMLDivElement);
     setThrottle(true);
     setTimeout(() => {
-      dispatch(getFakeProducts(5));
+      observer.observe(observerRef.current as HTMLDivElement);
       setThrottle(false);
     }, 200);
   };
@@ -54,7 +63,7 @@ export default function InininiteScrollObserver() {
           </Box>
         ))
       )}
-      <Box ref={observerRef}></Box>
+      <Box ref={observerRef} height="10px"></Box>
     </Box>
   );
 }

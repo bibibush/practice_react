@@ -38,6 +38,7 @@ export default function InfiniteScroll() {
   useEffect(() => {
     if (status === "pending") {
       dispatch(getFakeProducts(10));
+    } else {
       setLoading(false);
     }
   }, [status, dispatch]);

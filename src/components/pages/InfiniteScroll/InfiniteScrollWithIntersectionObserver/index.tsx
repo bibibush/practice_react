@@ -1,6 +1,6 @@
 import { Box, Spinner } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getFakeProducts } from "../../../../redux/slices";
 
 export default function InininiteScrollObserver() {
@@ -10,38 +10,32 @@ export default function InininiteScrollObserver() {
   const status = fakeProducts?.status;
   const observerRef = useRef<HTMLDivElement>(null);
 
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [throttle, setThrottle] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
-  const handleObserver = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
-  ) => {
-    const target = entries[0];
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      const target = entries[0];
 
-    if (target.isIntersecting) {
-      console.log("얼만큼 동작하나");
-      dispatch(getFakeProducts(5));
-    }
-  };
-  const observer = new IntersectionObserver(handleObserver, { threshold: 0.3 });
-  const handleScroll = () => {
-    if (throttle) {
-      return;
-    }
-    setThrottle(true);
-    setTimeout(() => {
-      observer.observe(observerRef.current as HTMLDivElement);
-      setThrottle(false);
-    }, 200);
-  };
+      if (target.isIntersecting) {
+        dispatch(getFakeProducts(5));
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (status === "pending") {
       dispatch(getFakeProducts(10));
+    } else {
       setLoading(false);
     }
   }, [status, dispatch]);
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0.3,
+    });
+    observer.observe(observerRef.current as HTMLDivElement);
+  }, [handleObserver]);
 
   return (
     <Box
@@ -52,7 +46,6 @@ export default function InininiteScrollObserver() {
       overflowY="scroll"
       textAlign="center"
       width="850px"
-      onScroll={handleScroll}
     >
       {isLoading ? (
         <Spinner size="lg" mt="15%" />
@@ -63,7 +56,7 @@ export default function InininiteScrollObserver() {
           </Box>
         ))
       )}
-      <Box ref={observerRef} height="10px"></Box>
+      <Box ref={observerRef} height="30px"></Box>
     </Box>
   );
 }

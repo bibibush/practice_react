@@ -16,23 +16,23 @@ export default function InininiteScrollObserver() {
     (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       const target = entries[0];
 
-      if (target.isIntersecting) {
+      if (target.isIntersecting && status === "fulfilled") {
         dispatch(getFakeProducts(5));
       }
     },
-    [dispatch]
+    [dispatch, status]
   );
 
   useEffect(() => {
     if (status === "pending") {
-      dispatch(getFakeProducts(10));
+      dispatch(getFakeProducts(12));
     } else {
       setLoading(false);
     }
   }, [status, dispatch]);
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0.3,
+      threshold: 1,
     });
     observer.observe(observerRef.current as HTMLDivElement);
   }, [handleObserver]);

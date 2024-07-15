@@ -32,7 +32,7 @@ export default function InininiteScrollObserver() {
   }, [status, dispatch]);
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1,
+      threshold: 0.3,
     });
     observer.observe(observerRef.current as HTMLDivElement);
   }, [handleObserver]);

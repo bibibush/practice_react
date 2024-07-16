@@ -10,14 +10,17 @@ const galleryAPI = (params: {
     url: "https://fakestoreapi.com/products",
     method: "GET",
     params: params.limit === 0 ? null : params,
-  }).then((res) => res.data);
+  }).then((res) => {
+    console.log(res);
+    return res;
+  });
 };
 
 export default function useGetGallery(
   params: { limit: number | null },
   options?: UseQueryOptions<GalleryResponse, AxiosError>
 ) {
-  const queryResults = useQuery<GalleryResponse, AxiosError>({
+  const queryResults = useQuery({
     queryKey: options?.queryKey ?? [""],
     queryFn: () => galleryAPI(params),
     ...options,

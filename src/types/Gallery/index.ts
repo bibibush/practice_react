@@ -12,7 +12,5 @@ export interface GalleryDataResponse {
 }
 
 export interface GalleryResponse {
-  status: string;
   data: GalleryDataResponse[];
-  message: string;
 }

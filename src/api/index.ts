@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 export interface RequestParams {
   url: string;
@@ -11,9 +11,9 @@ export function requestAPI<T>({
   method,
   params,
   ...config
-}: RequestParams & AxiosRequestConfig): Promise<AxiosResponse<T>> {
+}: RequestParams & AxiosRequestConfig): Promise<T> {
   return axios
-    .request({
+    .request<T>({
       method,
       url,
       params,

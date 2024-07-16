@@ -6,9 +6,15 @@ import useGetGallery from "../../../hooks/useGetGallery";
 function Gallery() {
   const [limit, setLimit] = useState<number | null>(null);
 
-  const { data: galleryData } = useGetGallery({
-    limit,
-  });
+  const { data: galleryData } = useGetGallery(
+    {
+      limit,
+    },
+    {
+      queryKey: ["Gallery", limit === 0 ? null : limit],
+      staleTime: 300000,
+    }
+  );
 
   return (
     <VStack>

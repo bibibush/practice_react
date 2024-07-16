@@ -5,6 +5,13 @@ import SideBar from "./components/pages/main/SideBar";
 import Main from "./components/pages/main/main";
 import InfiniteScroll from "./components/pages/InfiniteScroll";
 import InininiteScrollObserver from "./components/pages/InfiniteScroll/InfiniteScrollWithIntersectionObserver";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Gallery from "./components/pages/gallery";
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
 
 const router = createBrowserRouter([
   {
@@ -26,12 +33,21 @@ const router = createBrowserRouter([
         path: "infinite-observer",
         element: <InininiteScrollObserver />,
       },
+      {
+        path: "gallery",
+        element: <Gallery />,
+      },
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

@@ -1,9 +1,9 @@
 import { Flex, Img } from "@chakra-ui/react";
 import React from "react";
-import { GalleryDataResponse } from "../../../../types/Gallery";
+import { GalleryResponse } from "../../../../types/Gallery";
 
 interface WorksProps {
-  galleryData: GalleryDataResponse[];
+  galleryData: Array<GalleryResponse>;
 }
 
 function Works({ galleryData }: WorksProps) {

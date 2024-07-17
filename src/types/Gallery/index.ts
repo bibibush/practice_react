@@ -1,4 +1,4 @@
-export interface GalleryDataResponse {
+export interface GalleryResponse {
   id: number;
   title: string;
   price: number;
@@ -9,8 +9,4 @@ export interface GalleryDataResponse {
     rate: number;
     count: number;
   };
-}
-
-export interface GalleryResponse {
-  data: GalleryDataResponse[];
 }

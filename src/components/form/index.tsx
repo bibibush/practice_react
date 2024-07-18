@@ -1,4 +1,10 @@
-import { FormControl, FormErrorMessage, Input, Select } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
@@ -20,6 +26,9 @@ function Form() {
   }>({ mode: "onChange" });
 
   const pattern: RegExp = useMemo(() => /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/, []);
+  const handleSubmit = methods.handleSubmit((data) => {
+    alert(JSON.stringify(data));
+  });
 
   return (
     <form
@@ -30,11 +39,16 @@ function Form() {
         padding: "15px",
         width: "389px",
       }}
+      onSubmit={handleSubmit}
     >
       <FormControl isInvalid={!!methods.formState.errors.inputValue}>
         <Input
           bg="white"
           {...methods.register("inputValue", {
+            required: {
+              value: true,
+              message: "2~10자내로 입력해주세요. (특수문자 제외)",
+            },
             pattern: {
               value: pattern,
               message: "2~10자내로 입력해주세요. (특수문자 제외)",
@@ -55,6 +69,9 @@ function Form() {
           <option value={Codes.djokovic}>Novak Djokovic</option>
         </Select>
       </FormControl>
+      <Button colorScheme="blue" type="submit">
+        조회
+      </Button>
     </form>
   );
 }

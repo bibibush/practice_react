@@ -22,10 +22,8 @@ export function requestAPI<T>({
     .then((res) => {
       return res;
     })
-    .catch((err) => {
-      if (err instanceof AxiosError) {
-        console.log(err.response);
-        return err.response?.data;
-      }
+    .catch((err: AxiosError) => {
+      console.error(err);
+      return err.response?.data as AxiosResponse;
     });
 }

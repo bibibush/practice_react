@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface InitialState {
+interface State {
   status: string;
   dataList: Array<{ [key: string]: any }>;
   data: {
@@ -9,19 +9,22 @@ interface InitialState {
   message: string;
 }
 
-type State = {
-  state: InitialState;
+type Actions = {
+  updateState: (dataList: Array<{ [key: string]: any }>) => void;
 };
 
-const initialState: InitialState = {
+const useStore = create<State & Actions>((set) => ({
   status: "pending",
   dataList: [],
   data: {},
   message: "",
-};
-
-const useStore = create<State>((set) => ({
-  state: initialState,
+  updateState: (dataList) =>
+    set(() => {
+      return {
+        status: "fulfilled",
+        dataList,
+      };
+    }),
 }));
 
 export default useStore;

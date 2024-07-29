@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Gallery from "./components/pages/gallery";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./assets/theme";
+import Console from "./components/pages/Console";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "gallery",
         element: <Gallery />,
+      },
+      {
+        path: "console",
+        element: <Console />,
       },
     ],
   },

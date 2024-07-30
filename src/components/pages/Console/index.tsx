@@ -22,10 +22,9 @@ export default function Console() {
   };
 
   useEffect(() => {
-    console.log(data.length);
-    if (data.length) {
-      updateStore(data);
-    }
+    const dataList = data ?? [];
+
+    updateStore(dataList);
   }, [data, updateStore]);
 
   return (

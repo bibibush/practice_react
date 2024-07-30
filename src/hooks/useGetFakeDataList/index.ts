@@ -24,6 +24,6 @@ export default function useGetFakeDataList(
 
   return {
     ...queryResults,
-    data: queryResults.data ?? [],
+    data: queryResults.data,
   };
 }

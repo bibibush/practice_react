@@ -20,10 +20,9 @@ const useStore = create<State & Actions>((set) => ({
   message: "",
   updateState: (datas) =>
     set((state) => {
-      state.dataList.push(...datas);
       return {
         status: "fulfilled",
-        dataList: state.dataList,
+        dataList: [...state.dataList, ...datas],
       };
     }),
 }));

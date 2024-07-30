@@ -18,13 +18,16 @@ export default function Console() {
 
   const handleClick = () => {
     refetch();
-    setState((state) => (state += 1));
+    setState((state) => state + 1);
   };
 
   useEffect(() => {
-    updateStore(data);
+    console.log(data.length);
+    if (data.length) {
+      updateStore(data);
+    }
   }, [data, updateStore]);
-  console.log(dataList);
+
   return (
     <Flex alignItems="center" direction="column" gap={3}>
       <Button colorScheme="green" width="35%" onClick={handleClick}>

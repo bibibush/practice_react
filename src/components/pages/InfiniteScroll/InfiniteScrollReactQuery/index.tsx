@@ -7,6 +7,7 @@ export default function InfiniteScrollReactQuery() {
 
   const {
     data: dataList,
+    isFetching,
     isLoading,
     fetchNextPage,
   } = useGetInfiniteFakeDataList();
@@ -15,22 +16,24 @@ export default function InfiniteScrollReactQuery() {
     (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       const target = entries[0];
 
-      if (target.isIntersecting) {
+      if (target.isIntersecting && !isFetching) {
         fetchNextPage();
       }
     },
-    [fetchNextPage]
+    [isFetching, fetchNextPage]
   );
 
   useEffect(() => {
-    const observer =
-      globalThis.observer ||
-      new IntersectionObserver(handleObserver, {
-        threshold: 0.3,
-      });
-    observer.observe(observerRef.current as HTMLDivElement);
-    globalThis.observer = observer;
-  }, [handleObserver]);
+    if (dataList?.length) {
+      const observer =
+        globalThis.observer ||
+        new IntersectionObserver(handleObserver, {
+          threshold: 0.3,
+        });
+      observer.observe(observerRef.current as HTMLDivElement);
+      globalThis.observer = observer;
+    }
+  }, [dataList, handleObserver]);
 
   return (
     <Box

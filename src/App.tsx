@@ -11,6 +11,7 @@ import Gallery from "./components/pages/gallery";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./assets/theme";
 import Console from "./components/pages/Console";
+import InfiniteScrollReactQuery from "./components/pages/InfiniteScroll/InfiniteScrollReactQuery";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "infinite-observer",
         element: <InininiteScrollObserver />,
+      },
+      {
+        path: "infinite-react-query",
+        element: <InfiniteScrollReactQuery />,
       },
       {
         path: "gallery",

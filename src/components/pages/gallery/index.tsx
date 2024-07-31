@@ -2,16 +2,11 @@ import { Select, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Works from "./Works";
 import useGetGallery from "../../../hooks/useGetGallery";
-import StaleTime from "../../../types/staleTime";
 
 function Gallery() {
   const [limit, setLimit] = useState<number | null>(null);
 
-  const { data: galleryData } = useGetGallery({
-    params: { limit },
-    queryKey: ["Gallery", limit],
-    staleTime: StaleTime.five,
-  });
+  const { data: galleryData } = useGetGallery(limit);
 
   const handleChangeLimit = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!e.target.value) {
@@ -32,7 +27,7 @@ function Gallery() {
         <option value={10}>10</option>
         <option value={15}>15</option>
       </Select>
-      <Works galleryData={galleryData} />
+      <Works galleryData={galleryData ?? []} />
     </VStack>
   );
 }

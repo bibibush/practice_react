@@ -10,7 +10,10 @@ export default function InfiniteScrollReactQuery() {
     isFetching,
     isLoading,
     fetchNextPage,
-  } = useGetInfiniteFakeDataList();
+  } = useGetInfiniteFakeDataList({
+    initialPageNumber: 12,
+    nextPageNumber: 10,
+  });
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {

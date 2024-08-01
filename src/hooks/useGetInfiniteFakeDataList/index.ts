@@ -5,6 +5,11 @@ type Response = {
   [key: string]: any;
 };
 
+interface Params {
+  initialPageNumber: number;
+  nextPageNumber: number;
+}
+
 const infiniteFakeDataAPI = (params: {
   limit: number;
 }): Promise<Array<Response>> => {
@@ -15,17 +20,17 @@ const infiniteFakeDataAPI = (params: {
   }).then((res) => res.data);
 };
 
-export default function useGetInfiniteFakeDataList() {
+export default function useGetInfiniteFakeDataList(params: Params) {
   const queryResults = useInfiniteQuery({
     queryKey: ["infinite-fake-data"],
     queryFn: ({ pageParam }) => infiniteFakeDataAPI(pageParam),
-    initialPageParam: { limit: 12 },
+    initialPageParam: { limit: params.initialPageNumber },
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage.length) {
         return undefined;
       }
 
-      return { limit: 10 };
+      return { limit: params.nextPageNumber };
     },
   });
   const results = queryResults.data?.pages.reduce((acc, current) => {

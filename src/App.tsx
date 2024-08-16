@@ -12,6 +12,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./assets/theme";
 import Console from "./components/pages/Console";
 import InfiniteScrollReactQuery from "./components/pages/InfiniteScroll/InfiniteScrollReactQuery";
+import ListPage from "./components/pages/ListPage";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "console",
         element: <Console />,
+      },
+      {
+        path: "pagination",
+        element: <ListPage />,
       },
     ],
   },

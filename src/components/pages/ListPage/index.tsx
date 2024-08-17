@@ -36,7 +36,7 @@ function ListPage() {
       justifyContent="center"
       alignItems="center"
     >
-      {dataList.length && (
+      {dataList.length ? (
         <Fragment>
           <Flex
             alignItems="center"
@@ -59,7 +59,7 @@ function ListPage() {
             onChange={handleChangePage}
           />
         </Fragment>
-      )}
+      ) : null}
     </Flex>
   );
 }

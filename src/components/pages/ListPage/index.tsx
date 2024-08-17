@@ -1,11 +1,17 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import axios, { AxiosError } from "axios";
 import Pagination from "../../pagination";
 
 function ListPage() {
   const [dataList, setDataList] = useState<Array<any>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const limit = 5;
+  const offset = useMemo(() => (currentPage - 1) * limit, [currentPage]);
+  const resultDataList = useMemo(
+    () => dataList.slice(offset, currentPage * limit),
+    [currentPage, dataList, offset]
+  );
 
   const dataListThunk = async () => {
     try {
@@ -32,22 +38,24 @@ function ListPage() {
     >
       {dataList.length && (
         <Fragment>
-          <Box
+          <Flex
+            alignItems="center"
             bg="white"
+            direction="column"
             height="350px"
             margin="15px auto"
             overflow="hidden"
-            textAlign="center"
+            justifyContent="center"
             width="850px"
           >
-            {dataList.map((data: any, i) => (
+            {resultDataList.map((data: any, i) => (
               <Box key={i}>{data.title}</Box>
             ))}
-          </Box>
+          </Flex>
           <Pagination
             currentPage={currentPage}
             totalCount={dataList.length ?? 0}
-            limit={5}
+            limit={limit}
             onChange={handleChangePage}
           />
         </Fragment>

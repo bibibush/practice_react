@@ -1,24 +1,29 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SideBar() {
   const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
+  const navigation = useNavigate();
 
   const menus = [
     {
       id: 1,
       name: "제품",
       Children: [],
+      path: "/gallery",
     },
     {
       id: 2,
       name: "공지사항",
       Children: [],
+      path: "/",
     },
     {
       id: 3,
       name: "문의",
       Children: [],
+      path: "/",
     },
   ];
 
@@ -47,6 +52,7 @@ export default function SideBar() {
             _hover={{ bg: "white" }}
             onClick={() => {
               setSelectedMenuId(menu.id);
+              navigation(menu.path);
             }}
           >
             {menu.name}

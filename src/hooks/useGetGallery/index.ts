@@ -7,7 +7,12 @@ const galleryAPI = (params: number | null): Promise<GalleryResponse[]> => {
   return requestAPI<GalleryResponse[]>({
     url: "https://fakestoreapi.com/products",
     method: "GET",
-    params: params === 0 ? null : params,
+    params:
+      params === 0
+        ? null
+        : {
+            limit: params,
+          },
   }).then((res) => {
     return res.data;
   });
